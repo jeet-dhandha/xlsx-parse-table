@@ -5,17 +5,12 @@ const json = require("@rollup/plugin-json");
 const babel = require("rollup-plugin-babel");
 
 module.exports = {
-  input: "index.js", // Adjust the entry point as needed
+  input: "src/index.js", // Adjust the entry point as needed
   output: [
     {
       file: "dist/index.js",
-      format: "cjs",
-      sourcemap: true,
-    },
-    {
-      file: "dist/index.mjs",
-      format: "es",
-      sourcemap: true,
+      format: "iife",
+      name: "xlsxTableParser",
     },
   ],
   plugins: [
