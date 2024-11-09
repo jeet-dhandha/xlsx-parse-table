@@ -5,7 +5,7 @@
   "homepage": "https://github.com/jeet-dhandha/xlsx-parse-table",
   "author": "Jeet Dhandha",
   "license": "MIT",
-  "main": "index.js",
+  "main": "dist/index.js",
   "files": [
     "index.js"
   ],
