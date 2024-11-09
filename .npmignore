@@ -1,0 +1,12 @@
+# Example .npmignore file
+node_modules
+tests
+test.js
+/dist
+printLib.js
+*.log
+.xlsx-table-parser.js
+.ocrImportUtils.js
+Sample.MD
+package-lock.json
+/testLibrary
