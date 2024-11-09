@@ -1,7 +1,7 @@
 <div align="center"><img width="33%" src="info.png" />
 </div>
 
-# @libs-jd/xlsx-parse-table
+# @libs-jd/xlsx-parse-table [![npm version](https://badge.fury.io/js/@libs-jd%2Fxlsx-parse-table.svg)](https://badge.fury.io/js/@libs-jd%2Fxlsx-parse-table)
 
 > A library to parse tables from Excel worksheets.
 
