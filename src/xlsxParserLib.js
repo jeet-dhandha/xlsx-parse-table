@@ -1,4 +1,4 @@
-const { worksheetToArray } = require("./excelUtils.js");
+import { worksheetToArray } from "./excelUtils.js";
 
 // VERTICAL
 // Function to find table boundaries in the grid
@@ -122,4 +122,4 @@ function extractTables(worksheet) {
   return allTables;
 }
 
-module.exports = { extractTables };
+export { extractTables };

@@ -5,9 +5,9 @@
   "homepage": "https://github.com/jeet-dhandha/xlsx-parse-table",
   "author": "Jeet Dhandha",
   "license": "MIT",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "files": [
-    "src/**/*.js"
+    "dist"
   ],
   "engines": {
     "node": ">=14.0.0"
@@ -19,10 +19,8 @@
     "format": "prettier --write \"src/**/*.js\"",
     "prepare": "npm run build"
   },
-  "dependencies": {
-    "xlsx": "^0.18.5"
-  },
   "devDependencies": {
+    "xlsx": "^0.18.5",
     "@babel/core": "^7.26.0",
     "@babel/preset-env": "^7.26.0",
     "@rollup/plugin-commonjs": "^28.0.1",

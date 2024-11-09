@@ -1,2 +1,2 @@
-const xlsxTableParser = require("./lib");
-module.exports = xlsxTableParser;
+import * as xlsxTableParser from "./lib";
+export default xlsxTableParser;

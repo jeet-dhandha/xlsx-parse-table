@@ -1,7 +1,6 @@
 // Published as NPM Library
-const XLSX = require("xlsx");
+import { extractTables } from "./xlsxParserLib";
 
-const { extractTables } = require("./xlsxParserLib");
 /**
  * @typedef Table
  * @type {Array<string>}
@@ -10,13 +9,11 @@ const { extractTables } = require("./xlsxParserLib");
 
 /**
  * Parse tables and return as Array of Tables
- * @param {string} path
+ * @param {Object} worksheet
  * @returns {Array<Table>}
  */
-const parse = (path) => {
-  const workbook = XLSX.readFile(path, { sheets: 0, type: "array" });
-  const sheet_name_list = workbook.SheetNames;
-  return extractTables(workbook.Sheets[sheet_name_list[0]]);
+const parse = (worksheet) => {
+  return extractTables(worksheet);
 };
 
-module.exports = { parse };
+export { parse };

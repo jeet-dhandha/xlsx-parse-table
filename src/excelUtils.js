@@ -41,4 +41,4 @@ function worksheetToArray(worksheet) {
   return result;
 }
 
-module.exports = { worksheetToArray };
+export { worksheetToArray };

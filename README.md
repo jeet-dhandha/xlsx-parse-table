@@ -7,7 +7,7 @@
 Install with [npm](https://www.npmjs.com/):
 
 ```sh
-$ npm install --save @libs-jb/xlsx-parse-table
+$ npm install --save @libs-jb/xlsx-parse-table xlsx
 ```
 
 ## Usage
@@ -15,9 +15,11 @@ $ npm install --save @libs-jb/xlsx-parse-table
 Works with Excel files.
 
 ```js
+const xlsx = require("xlsx");
+const workbook = xlsx.readFile("path/to/excel-file.xlsx");
+const worksheet = workbook.Sheets[workbook.SheetNames[0]];
 const { parse } = require("@libs-jb/xlsx-parse-table");
-
-const tables = parse("path/to/your/excel-file.xlsx");
+const tables = parse(worksheet);
 
 console.log(tables);
 ```

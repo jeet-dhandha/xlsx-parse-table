@@ -9,8 +9,7 @@ module.exports = {
   output: [
     {
       file: "dist/index.js",
-      format: "iife",
-      name: "xlsxTableParser",
+      format: "cjs",
     },
   ],
   plugins: [
