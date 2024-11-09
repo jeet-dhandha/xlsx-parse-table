@@ -10,3 +10,5 @@ printLib.js
 Sample.MD
 package-lock.json
 /testLibrary
+/src
+./index.js
