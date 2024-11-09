@@ -177,12 +177,6 @@ You might also be interested in these projects:
 
 - [xlsx](https://www.npmjs.com/package/xlsx): A library to parse and write Excel files. | [homepage](https://github.com/SheetJS/sheetjs "A library to parse and write Excel files.")
 
-### Contributors
-
-| **Commits** | **Contributor**                                 |
-| ----------- | ----------------------------------------------- |
-| 13          | [jeet-dhandha](https://github.com/jeet-dhandha) |
-
 ### Author
 
 **Jeet Dhandha**
