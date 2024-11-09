@@ -40,7 +40,7 @@ Pull requests and stars are always welcome. For bugs and feature requests, [plea
 
 ### Sample Files
 
-- [dummy-with-mer-mec-6-out.xlsx](https://github.com/user-attachments/files/17686507/dummy-with-mer-mec-6-out.xlsx)
+[dummy-with-mer-mec-6-out.xlsx](https://github.com/user-attachments/files/17686507/dummy-with-mer-mec-6-out.xlsx)
 
 <details>
   <summary>Output</summary>
@@ -105,7 +105,7 @@ Table 6:
 
 </details>
   
-- [dummy-with-ser-noec-2-out.xlsx](https://github.com/user-attachments/files/17686508/dummy-with-ser-noec-2-out.xlsx)
+[dummy-with-ser-noec-2-out.xlsx](https://github.com/user-attachments/files/17686508/dummy-with-ser-noec-2-out.xlsx)
 
 <details>
   <summary>Output</summary>
@@ -133,7 +133,7 @@ Table 2:
 
 </details>
 
-- [dummy-with-ser-sec-3-out.xlsx](https://github.com/user-attachments/files/17686512/dummy-with-ser-sec-3-out.xlsx)
+[dummy-with-ser-sec-3-out.xlsx](https://github.com/user-attachments/files/17686512/dummy-with-ser-sec-3-out.xlsx)
 
 <details>
   <summary>Output</summary>
