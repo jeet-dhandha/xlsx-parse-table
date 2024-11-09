@@ -1,3 +1,5 @@
+<div align="center"><img width="33%" src="info.png" />
+</div>
 # @libs-jd/xlsx-parse-table
 
 > A library to parse tables from Excel worksheets.
