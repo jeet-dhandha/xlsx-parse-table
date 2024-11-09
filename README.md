@@ -1,4 +1,4 @@
-# xlsx-parse-table
+# @libs-jd/xlsx-parse-table
 
 > A library to parse tables from Excel worksheets.
 
@@ -13,6 +13,8 @@ $ npm install --save @libs-jb/xlsx-parse-table xlsx
 ## Usage
 
 Works with Excel files.
+
+# Example - Node.js
 
 ```js
 const xlsx = require("xlsx");
