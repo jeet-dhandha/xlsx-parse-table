@@ -48,7 +48,7 @@ function parseFromTablePathAndShowLogs(tables) {
 
   tables.forEach((table, index) => {
     console.log(`Table ${index + 1}:`);
-    console.log(`  Number of rows: ${table.length}`);
+    console.log(`  Number of rows: ${table.length - 1}`);
     console.log(`  Number of columns: ${table[0].length}`);
     console.log("  Sample data:");
 

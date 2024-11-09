@@ -1,7 +1,6 @@
 import { worksheetToArray } from "./excelUtils.js";
 
 // VERTICAL
-// Function to find table boundaries in the grid
 function findTableBoundaries(grid) {
   const tables = [];
   let currentTable = null;
@@ -10,19 +9,15 @@ function findTableBoundaries(grid) {
     let hasContent = grid[row].some((cell) => cell !== "");
 
     if (hasContent && !currentTable) {
-      // Start new table
       currentTable = { startRow: row, endRow: row };
     } else if (hasContent && currentTable) {
-      // Extend current table
       currentTable.endRow = row;
     } else if (!hasContent && currentTable) {
-      // Empty row - finish current table
       tables.push(currentTable);
       currentTable = null;
     }
   }
 
-  // Add last table if exists
   if (currentTable) {
     tables.push(currentTable);
   }
@@ -30,11 +25,8 @@ function findTableBoundaries(grid) {
   return tables;
 }
 
-// Function to extract a single table given boundaries
 function extractTable(grid, tableInfo) {
   const result = [];
-
-  // Find left and right boundaries
   let minCol = Infinity;
   let maxCol = -1;
 
@@ -47,7 +39,6 @@ function extractTable(grid, tableInfo) {
     }
   }
 
-  // Extract table data
   for (let row = tableInfo.startRow; row <= tableInfo.endRow; row++) {
     const tableRow = grid[row].slice(minCol, maxCol + 1);
     result.push(tableRow);
@@ -56,16 +47,13 @@ function extractTable(grid, tableInfo) {
   return result;
 }
 
-/// HORIZONTAL
-// New function to find horizontal gaps in a table
+// HORIZONTAL
 function findHorizontalGaps(table) {
   const gaps = [];
 
-  // Check each column
   for (let col = 0; col < table[0].length - 1; col++) {
     let isGap = true;
 
-    // Check if entire column is empty
     for (let row = 0; row < table.length; row++) {
       if (table[row][col] !== "") {
         isGap = false;
@@ -81,7 +69,6 @@ function findHorizontalGaps(table) {
   return gaps;
 }
 
-// Function to split table horizontally
 function splitTableHorizontally(table) {
   const gaps = findHorizontalGaps(table);
   if (gaps.length === 0) return [table];
@@ -91,35 +78,41 @@ function splitTableHorizontally(table) {
 
   for (const gap of gaps) {
     if (gap > startCol) {
-      const subTable = table.map((row) => row.slice(startCol, gap));
+      const subTable = table.map((row) => row.slice(startCol, gap)).filter((row) => row.some((cell) => cell !== ""));
       subTables.push(subTable);
     }
     startCol = gap + 1;
   }
 
-  // Add last section
   if (startCol < table[0].length) {
-    const subTable = table.map((row) => row.slice(startCol));
+    const subTable = table.map((row) => row.slice(startCol)).filter((row) => row.some((cell) => cell !== ""));
     subTables.push(subTable);
   }
 
-  // Filter out empty tables
   return subTables.filter((table) => table.some((row) => row.some((cell) => cell !== "")));
 }
 
 // MAIN TABLES
-
-// Main function to extract all tables
-// Updated main function
 function extractTables(worksheet) {
   const grid = worksheetToArray(worksheet);
-  const tableBoundaries = findTableBoundaries(grid);
-  const verticallySplitTables = tableBoundaries.map((bounds) => extractTable(grid, bounds));
+  return recursivelyExtractTables([grid]);
+}
 
-  // Split each vertical table horizontally
-  const allTables = verticallySplitTables.flatMap((table) => splitTableHorizontally(table));
+function recursivelyExtractTables(tables) {
+  let newTables = [];
 
-  return allTables;
+  for (const table of tables) {
+    const tableBoundaries = findTableBoundaries(table);
+    const verticallySplitTables = tableBoundaries.map((bounds) => extractTable(table, bounds));
+    const horizontallySplitTables = verticallySplitTables.flatMap((table) => splitTableHorizontally(table));
+    newTables.push(...horizontallySplitTables);
+  }
+
+  if (newTables.length > tables.length) {
+    return recursivelyExtractTables(newTables);
+  }
+
+  return newTables;
 }
 
 export { extractTables };
