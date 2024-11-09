@@ -1,2 +1,2 @@
-const xlsxTableParser = require("./lib");
+const xlsxTableParser = require("./src/lib");
 module.exports = xlsxTableParser;

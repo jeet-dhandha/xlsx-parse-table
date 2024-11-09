@@ -4,7 +4,7 @@ const { terser } = require("rollup-plugin-terser");
 const json = require("@rollup/plugin-json");
 
 module.exports = {
-  input: "index.js", // Adjust the entry point as needed
+  input: ["index.js", "src/**/*.js"], // Adjust the entry point as needed
   output: [
     {
       file: "dist/index.js",
