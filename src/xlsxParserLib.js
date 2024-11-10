@@ -4,40 +4,60 @@ function findConnectedRegions(grid) {
     .map(() => Array(grid[0].length).fill(false));
   const regions = [];
 
-  function flood(row, col, region) {
-    if (row < 0 || row >= grid.length || col < 0 || col >= grid[0].length) return;
-    if (visited[row][col] || grid[row][col] === "") return;
+  // Directions for 8-way connectivity
+  const directions = [
+    [-1, -1],
+    [-1, 0],
+    [-1, 1],
+    [0, -1],
+    [0, 1],
+    [1, -1],
+    [1, 0],
+    [1, 1],
+  ];
 
-    visited[row][col] = true;
-    region.cells.push([row, col]);
-    region.bounds = {
-      minRow: Math.min(region.bounds.minRow, row),
-      maxRow: Math.max(region.bounds.maxRow, row),
-      minCol: Math.min(region.bounds.minCol, col),
-      maxCol: Math.max(region.bounds.maxCol, col),
+  function iterativeFlood(startRow, startCol) {
+    const region = {
+      cells: [],
+      bounds: {
+        minRow: Infinity,
+        maxRow: -Infinity,
+        minCol: Infinity,
+        maxCol: -Infinity,
+      },
     };
 
-    // Check all 8 directions
-    for (let dr = -1; dr <= 1; dr++) {
-      for (let dc = -1; dc <= 1; dc++) {
-        flood(row + dr, col + dc, region);
+    // Use array as queue for BFS
+    const queue = [[startRow, startCol]];
+
+    while (queue.length > 0) {
+      const [row, col] = queue.shift();
+
+      if (row < 0 || row >= grid.length || col < 0 || col >= grid[0].length) continue;
+      if (visited[row][col] || grid[row][col] === "") continue;
+
+      visited[row][col] = true;
+      region.cells.push([row, col]);
+      region.bounds = {
+        minRow: Math.min(region.bounds.minRow, row),
+        maxRow: Math.max(region.bounds.maxRow, row),
+        minCol: Math.min(region.bounds.minCol, col),
+        maxCol: Math.max(region.bounds.maxCol, col),
+      };
+
+      // Add all 8 neighbors to queue
+      for (const [dr, dc] of directions) {
+        queue.push([row + dr, col + dc]);
       }
     }
+
+    return region;
   }
 
   for (let row = 0; row < grid.length; row++) {
     for (let col = 0; col < grid[0].length; col++) {
       if (!visited[row][col] && grid[row][col] !== "") {
-        const region = {
-          cells: [],
-          bounds: {
-            minRow: Infinity,
-            maxRow: -Infinity,
-            minCol: Infinity,
-            maxCol: -Infinity,
-          },
-        };
-        flood(row, col, region);
+        const region = iterativeFlood(row, col);
         regions.push(region);
       }
     }
