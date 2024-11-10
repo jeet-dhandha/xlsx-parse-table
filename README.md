@@ -5,6 +5,10 @@
 
 > A library to parse tables from Excel worksheets.
 
+## Demo
+
+Link to [Demo](https://xlsx-parse-table-demo.vercel.app/), where you can upload an Excel file and see the parsed tables.
+
 ## Install
 
 Install with [npm](https://www.npmjs.com/):
