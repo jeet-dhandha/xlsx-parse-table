@@ -1,7 +1,4 @@
 /node_modules
-.xlsx-table-parser.js
-Sample.MD
 package-lock.json
-.ocrImportUtils.js
 /dist
-/testLibrary
+/testL
