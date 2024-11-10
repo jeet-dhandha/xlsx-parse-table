@@ -1,3 +1,75 @@
+function findConnectedRegions(grid) {
+  const visited = Array(grid.length)
+    .fill()
+    .map(() => Array(grid[0].length).fill(false));
+  const regions = [];
+
+  function flood(row, col, region) {
+    if (row < 0 || row >= grid.length || col < 0 || col >= grid[0].length) return;
+    if (visited[row][col] || grid[row][col] === "") return;
+
+    visited[row][col] = true;
+    region.cells.push([row, col]);
+    region.bounds = {
+      minRow: Math.min(region.bounds.minRow, row),
+      maxRow: Math.max(region.bounds.maxRow, row),
+      minCol: Math.min(region.bounds.minCol, col),
+      maxCol: Math.max(region.bounds.maxCol, col),
+    };
+
+    // Check all 8 directions
+    for (let dr = -1; dr <= 1; dr++) {
+      for (let dc = -1; dc <= 1; dc++) {
+        flood(row + dr, col + dc, region);
+      }
+    }
+  }
+
+  for (let row = 0; row < grid.length; row++) {
+    for (let col = 0; col < grid[0].length; col++) {
+      if (!visited[row][col] && grid[row][col] !== "") {
+        const region = {
+          cells: [],
+          bounds: {
+            minRow: Infinity,
+            maxRow: -Infinity,
+            minCol: Infinity,
+            maxCol: -Infinity,
+          },
+        };
+        flood(row, col, region);
+        regions.push(region);
+      }
+    }
+  }
+
+  return regions;
+}
+
+function extractRegionAsTable(grid, region) {
+  const { minRow, maxRow, minCol, maxCol } = region.bounds;
+  const table = [];
+
+  for (let row = minRow; row <= maxRow; row++) {
+    const tableRow = [];
+    for (let col = minCol; col <= maxCol; col++) {
+      tableRow.push(grid[row][col]);
+    }
+    table.push(tableRow);
+  }
+
+  return table;
+}
+
+function splitTables(grid) {
+  if (!grid.length || !grid[0].length) return [];
+
+  const regions = findConnectedRegions(grid);
+  return regions.map((region) => extractRegionAsTable(grid, region));
+}
+
+// ---------------------------------------------------------------------------------
+
 function convertExcelRangeToNumber(range) {
   const match = range.match(/([A-Z]+)(\d+)/);
   if (!match) return [-1, -1];
@@ -34,69 +106,6 @@ function worksheetToArray(worksheet) {
 function extractTables(worksheet) {
   const grid = worksheetToArray(worksheet);
   return splitTables(grid);
-}
-
-function splitTables(grid) {
-  const tables = [];
-  let currentTable = null;
-
-  // Split vertically
-  for (let row = 0; row < grid.length; row++) {
-    const hasContent = grid[row].some((cell) => cell !== "");
-
-    if (hasContent) {
-      if (!currentTable) currentTable = { start: row, end: row };
-      else currentTable.end = row;
-    } else if (currentTable) {
-      tables.push(extractSubTable(grid, currentTable));
-      currentTable = null;
-    }
-  }
-  if (currentTable) tables.push(extractSubTable(grid, currentTable));
-
-  // Split horizontally
-  return tables.flatMap((table) => {
-    const gaps = [];
-    for (let col = 0; col < table[0].length - 1; col++) {
-      if (table.every((row) => row[col] === "")) gaps.push(col);
-    }
-
-    if (!gaps.length) return [table];
-
-    const subTables = [];
-    let startCol = 0;
-
-    for (const gap of gaps) {
-      if (gap > startCol) {
-        const subTable = table.map((row) => row.slice(startCol, gap)).filter((row) => row.some((cell) => cell !== ""));
-        if (subTable.length) subTables.push(subTable);
-      }
-      startCol = gap + 1;
-    }
-
-    if (startCol < table[0].length) {
-      const subTable = table.map((row) => row.slice(startCol)).filter((row) => row.some((cell) => cell !== ""));
-      if (subTable.length) subTables.push(subTable);
-    }
-
-    return subTables;
-  });
-}
-
-function extractSubTable(grid, { start, end }) {
-  let minCol = Infinity,
-    maxCol = -1;
-
-  for (let row = start; row <= end; row++) {
-    for (let col = 0; col < grid[row].length; col++) {
-      if (grid[row][col] !== "") {
-        minCol = Math.min(minCol, col);
-        maxCol = Math.max(maxCol, col);
-      }
-    }
-  }
-
-  return grid.slice(start, end + 1).map((row) => row.slice(minCol, maxCol + 1));
 }
 
 export { extractTables };
